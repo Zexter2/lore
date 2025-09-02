@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quackingwaxx Lore: Historical Timeline</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 30%, #16213e 70%, #0f3460 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .timeline-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .header::before {
+            content: '🥷🦆';
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 10px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            background: linear-gradient(45deg, #ffd700, #ffed4e, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+            font-weight: bold;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: #b8860b;
+            font-style: italic;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .timeline {
+            position: relative;
+            margin: 40px 0;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, #ffd700, #daa520, #b8860b, #8b7355);
+            border-radius: 2px;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .timeline-event {
+            position: relative;
+            margin: 80px 0;
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+
+        .timeline-event:hover {
+            transform: scale(1.03);
+        }
+
+        .timeline-event.left {
+            text-align: right;
+            padding-right: calc(50% + 50px);
+        }
+
+        .timeline-event.right {
+            text-align: left;
+            padding-left: calc(50% + 50px);
+        }
+
+        .event-marker {
+            position: absolute;
+            left: 50%;
+            top: 25px;
+            transform: translateX(-50%);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 4px solid #ffd700;
+            z-index: 2;
+            transition: all 0.4s ease;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+        }
+
+        .event-marker.series1 { background: #4a90e2; }
+        .event-marker.series2 { background: #7b68ee; }
+        .event-marker.currency { background: #ffd700; }
+        .event-marker.season5 { background: #ff6b6b; }
+        .event-marker.season6 { background: #4ecdc4; }
+
+        .timeline-event:hover .event-marker {
+            transform: translateX(-50%) scale(1.4);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+        }
+
+        .event-card {
+            background: linear-gradient(135deg, rgba(26, 26, 46, 0.9), rgba(22, 33, 62, 0.9));
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            border: 2px solid;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .event-card.series1 { border-color: #4a90e2; }
+        .event-card.series2 { border-color: #7b68ee; }
+        .event-card.currency { border-color: #ffd700; }
+        .event-card.season5 { border-color: #ff6b6b; }
+        .event-card.season6 { border-color: #4ecdc4; }
+
+        .event-card:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            transform: translateY(-5px);
+        }
+
+        .event-era {
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .event-era.series1 { color: #4a90e2; }
+        .event-era.series2 { color: #7b68ee; }
+        .event-era.currency { color: #ffd700; }
+        .event-era.season5 { color: #ff6b6b; }
+        .event-era.season6 { color: #4ecdc4; }
+
+        .event-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 12px;
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .event-preview {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #cccccc;
+            margin-bottom: 10px;
+        }
+
+        .expand-indicator {
+            font-size: 0.8rem;
+            color: #ffd700;
+            font-style: italic;
+            opacity: 0.8;
+        }
+
+        .event-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            margin-top: 20px;
+        }
+
+        .event-details.expanded {
+            max-height: 800px;
+        }
+
+        .characters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .character-card {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+            padding: 15px;
+            border-left: 4px solid;
+            transition: all 0.3s ease;
+        }
+
+        .character-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .character-card.common { border-left-color: #888888; }
+        .character-card.rare { border-left-color: #4a90e2; }
+        .character-card.epic { border-left-color: #9b59b6; }
+        .character-card.super-rare { border-left-color: #e74c3c; }
+        .character-card.legendary { border-left-color: #f39c12; }
+
+        .character-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #ffffff;
+        }
+
+        .character-rarity {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+        }
+
+        .character-rarity.common { color: #888888; }
+        .character-rarity.rare { color: #4a90e2; }
+        .character-rarity.epic { color: #9b59b6; }
+        .character-rarity.super-rare { color: #e74c3c; }
+        .character-rarity.legendary { color: #f39c12; }
+
+        .currency-showcase {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .currency-item {
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid #ffd700;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            min-width: 150px;
+            transition: all 0.3s ease;
+        }
+
+        .currency-item:hover {
+            background: rgba(255, 215, 0, 0.2);
+            transform: scale(1.05);
+        }
+
+        .currency-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .currency-name {
+            font-weight: bold;
+            color: #ffd700;
+            margin-bottom: 5px;
+        }
+
+        .currency-desc {
+            font-size: 0.9rem;
+            color: #cccccc;
+        }
+
+        .era-legend {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .legend-color.series1 { background: #4a90e2; }
+        .legend-color.series2 { background: #7b68ee; }
+        .legend-color.currency { background: #ffd700; }
+        .legend-color.season5 { background: #ff6b6b; }
+        .legend-color.season6 { background: #4ecdc4; }
+
+        @media (max-width: 768px) {
+            .timeline-event.left,
+            .timeline-event.right {
+                text-align: left;
+                padding-left: 60px;
+                padding-right: 20px;
+            }
+
+            .event-marker {
+                left: 20px;
+            }
+
+            .timeline-line {
+                left: 20px;
+            }
+
+            .header h1 {
+                font-size: 2.2rem;
+            }
+
+            .characters-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .currency-showcase {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="timeline-container">
+        <div class="header">
+            <h1>Quackingwaxx Lore</h1>
+            <p>A Historical Timeline of Ninja Duck Legends</p>
+        </div>
+
+        <div class="timeline">
+            <div class="timeline-line"></div>
+
+            <div class="timeline-event left" onclick="toggleEvent(this)">
+                <div class="event-marker series1"></div>
+                <div class="event-card series1">
+                    <div class="event-era series1">Series 1</div>
+                    <div class="event-title">The Origins</div>
+                    <div class="event-preview">The first ninja ducks emerge, led by the legendary Shadow Feathers the Great.</div>
+                    <div class="expand-indicator">Click to explore the founding legends...</div>
+                    <div class="event-details">
+                        <div class="characters-grid">
+                            <div class="character-card common">
+                                <div class="character-name">Quacken Slash</div>
+                                <div class="character-rarity common">Common</div>
+                            </div>
+                            <div class="character-card common">
+                                <div class="character-name">Whift Flair</div>
+                                <div class="character-rarity common">Common</div>
+                            </div>
+                            <div class="character-card common">
+                                <div class="character-name">Quacking Strike</div>
+                                <div class="character-rarity common">Common</div>
+                            </div>
+                            <div class="character-card rare">
+                                <div class="character-name">Dark Shinobi</div>
+                                <div class="character-rarity rare">Rare</div>
+                            </div>
+                            <div class="character-card epic">
+                                <div class="character-name">Phoenix Queen</div>
+                                <div class="character-rarity epic">Epic</div>
+                            </div>
+                            <div class="character-card super-rare">
+                                <div class="character-name">Astral Blade</div>
+                                <div class="character-rarity super-rare">Super-Rare</div>
+                            </div>
+                            <div class="character-card legendary">
+                                <div class="character-name">Shadow Feathers the Great</div>
+                                <div class="character-rarity legendary">Legendary</div>
+                            </div>
+                        </div>
+                        <p style="color: #cccccc; margin-top: 15px; font-style: italic;">
+                            The founding era where ordinary ducks were infused with destiny. Shadow Feathers the Great established the ninja arts that would define generations of warrior ducks.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-event right" onclick="toggleEvent(this)">
+                <div class="event-marker series2"></div>
+                <div class="event-card series2">
+                    <div class="event-era series2">Series 2</div>
+                    <div class="event-title">Magic & Warfare Emerges</div>
+                    <div class="event-preview">Clans expand across the land as magic and military prowess develop under General Wu's leadership.</div>
+                    <div class="expand-indicator">Click to discover the magical warriors...</div>
+                    <div class="event-details">
+                        <div class="characters-grid">
+                            <div class="character-card common">
+                                <div class="character-name">Sienna Silk</div>
+                                <div class="character-rarity common">Common</div>
+                            </div>
+                            <div class="character-card common">
+                                <div class="character-name">Billy</div>
+                                <div class="character-rarity common">Common</div>
+                            </div>
+                            <div class="character-card common">
+                                <div class="character-name">Isabella DeYoung</div>
+                                <div class="character-rarity common">Common</div>
+                            </div>
+                            <div class="character-card rare">
+                                <div class="character-name">Firedancer</div>
+                                <div class="character-rarity rare">Rare</div>
+                            </div>
+                            <div class="character-card epic">
+                                <div class="character-name">Quackius the Wizard</div>
+                                <div class="character-rarity epic">Epic</div>
+                            </div>
+                            <div class="character-card super-rare">
+                                <div class="character-name">Quacktumn Enchanter</div>
+                                <div class="character-rarity super-rare">Super-Rare</div>
+                            </div>
+                            <div class="character-card legendary">
+                                <div class="character-name">General Wu</div>
+                                <div class="character-rarity legendary">Legendary</div>
+                            </div>
+                        </div>
+                        <p style="color: #cccccc; margin-top: 15px; font-style: italic;">
+                            The age of expansion where clans spread across the realm. General Wu emerged as a heroic leader, mastering both flame and mystical arts, becoming the namesake of the powerful Wu Coin currency.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-event left" onclick="toggleEvent(this)">
+                <div class="event-marker currency"></div>
+                <div class="event-card currency">
+                    <div class="event-era currency">Economic Era</div>
+                    <div class="event-title">Currency & Power System</div>
+                    <div class="event-preview">The three-tier currency system emerges, establishing the economic foundation of the duck realm.</div>
+                    <div class="expand-indicator">Click to explore the currency hierarchy...</div>
+                    <div class="event-details">
+                        <div class="currency-showcase">
+                            <div class="currency-item">
+                                <div class="currency-icon">🥉</div>
+                                <div class="currency-name">General Wu Coin</div>
+                                <div class="currency-desc">Bronze currency that summons ninja potential</div>
+                            </div>
+                            <div class="currency-item">
+                                <div class="currency-icon">🥈</div>
+                                <div class="currency-name">Soulful Duck Coin</div>
+                                <div class="currency-desc">Silver reward crafted from 5 Wu Coins</div>
+                            </div>
+                            <div class="currency-item">
+                                <div class="currency-icon">🥇</div>
+                                <div class="currency-name">Coin of Arashi</div>
+                                <div class="currency-desc">Gold legacy coin held by Arashi Wu</div>
+                            </div>
+                        </div>
+                        <p style="color: #cccccc; margin-top: 15px; font-style: italic;">
+                            The economic backbone of the duck realm. The Coin of Arashi, forged from 2 Soulful Duck Coins, symbolizes ultimate ambition and legacy—currently held by Arashi Wu, son of the legendary General Wu.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-event right" onclick="toggleEvent(this)">
+                <div class="event-marker season5"></div>
+                <div class="event-card season5">
+                    <div class="event-era season5">Season 5</div>
+                    <div class="event-title">The Royal Reconstruction</div>
+                    <div class="event-preview">The Quacking Pass system launches, introducing Duck Royalty NFTs and exclusive racing competitions.</div>
+                    <div class="expand-indicator">Click to learn about the royal era...</div>
+                    <div class="event-details">
+                        <div style="background: rgba(255, 107, 107, 0.1); padding: 20px; border-radius: 10px; margin: 15px 0;">
+                            <h4 style="color: #ff6b6b; margin-bottom: 10px;">🎫 The Quacking Pass</h4>
+                            <p style="color: #cccccc;">Grants access to exclusive drops and weekly #pass-races competitions.</p>
+                        </div>
+                        <div style="background: rgba(255, 107, 107, 0.1); padding: 20px; border-radius: 10px; margin: 15px 0;">
+                            <h4 style="color: #ff6b6b; margin-bottom: 10px;">👑 Duck Royalty NFTs</h4>
+                            <p style="color: #cccccc;">Winners of Duck-Races or auctions become royalty, earning 1 Wu Coin monthly.</p>
+                        </div>
+                        <div style="background: rgba(255, 107, 107, 0.1); padding: 20px; border-radius: 10px; margin: 15px 0;">
+                            <h4 style="color: #ff6b6b; margin-bottom: 10px;">🏆 Season 5 Hunt Requirements</h4>
+                            <p style="color: #cccccc;">Required holding: 2 Legendary/Mythic, 2 Super-Rare, 5 Epic, 6 Rare, 8 Common NFTs to qualify for epic rewards including Mythic NFTs and WAX prizes.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-event left" onclick="toggleEvent(this)">
+                <div class="event-marker season6"></div>
+                <div class="event-card season6">
+                    <div class="event-era season6">Season 6</div>
+                    <div class="event-title">A New Chapter Begins</div>
+                    <div class="event-preview">The saga enters a new era with Series Six, blending enhanced lore and gameplay mechanics.</div>
+                    <div class="expand-indicator">Click to glimpse the future...</div>
+                    <div class="event-details">
+                        <div style="background: rgba(78, 205, 196, 0.1); padding: 20px; border-radius: 10px; margin: 15px 0;">
+                            <h4 style="color: #4ecdc4; margin-bottom: 10px;">🚀 Series Six Launch</h4>
+                            <p style="color: #cccccc;">Fresh NFTs blending enhanced lore with innovative gameplay mechanics, yet to be fully revealed.</p>
+                        </div>
+                        <div style="background: rgba(78, 205, 196, 0.1); padding: 20px; border-radius: 10px; margin: 15px 0;">
+                            <h4 style="color: #4ecdc4; margin-bottom: 10px;">💰 Season 6 Hunt & Prize Pool</h4>
+                            <p style="color: #cccccc;">A growing WAX prize pool awaits competitors, featuring custom ducks and mythic rewards for finalists.</p>
+                        </div>
+                        <div style="background: rgba(78, 205, 196, 0.1); padding: 20px; border-radius: 10px; margin: 15px 0;">
+                            <h4 style="color: #4ecdc4; margin-bottom: 10px;">🔮 The Future Awaits</h4>
+                            <p style="color: #cccccc;">The ninja duck legacy continues to evolve, promising new adventures and legendary characters in the expanding Quackingwaxx universe.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="era-legend">
+            <div class="legend-item">
+                <div class="legend-color series1"></div>
+                <span><strong>Series 1: Origins</strong></span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color series2"></div>
+                <span><strong>Series 2: Magic & Warfare</strong></span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color currency"></div>
+                <span><strong>Currency System</strong></span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color season5"></div>
+                <span><strong>Season 5: Royal Era</strong></span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color season6"></div>
+                <span><strong>Season 6: New Chapter</strong></span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleEvent(eventElement) {
+            const details = eventElement.querySelector('.event-details');
+            const indicator = eventElement.querySelector('.expand-indicator');
+            
+            // Close all other expanded events
+            document.querySelectorAll('.event-details.expanded').forEach(detail => {
+                if (detail !== details) {
+                    detail.classList.remove('expanded');
+                    detail.parentElement.querySelector('.expand-indicator').textContent = detail.parentElement.querySelector('.expand-indicator').textContent.replace('Click to collapse...', 'Click to explore...').replace('Click to collapse...', 'Click to discover...').replace('Click to collapse...', 'Click to learn...').replace('Click to collapse...', 'Click to glimpse...');
+                }
+            });
+            
+            // Toggle current event
+            if (details.classList.contains('expanded')) {
+                details.classList.remove('expanded');
+                const originalText = indicator.textContent.includes('legends') ? 'Click to explore the founding legends...' :
+                                  indicator.textContent.includes('warriors') ? 'Click to discover the magical warriors...' :
+                                  indicator.textContent.includes('hierarchy') ? 'Click to explore the currency hierarchy...' :
+                                  indicator.textContent.includes('royal') ? 'Click to learn about the royal era...' :
+                                  'Click to glimpse the future...';
+                indicator.textContent = originalText;
+            } else {
+                details.classList.add('expanded');
+                indicator.textContent = 'Click to collapse...';
+                
+                // Smooth scroll to center the expanded event
+                setTimeout(() => {
+                    eventElement.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'center' 
+                    });
+                }, 300);
+            }
+        }
+
+        // Add keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.event-details.expanded').forEach(detail => {
+                    detail.classList.remove('expanded');
+                    const indicator = detail.parentElement.querySelector('.expand-indicator');
+                    const originalText = indicator.textContent.includes('legends') ? 'Click to explore the founding legends...' :
+                                      indicator.textContent.includes('warriors') ? 'Click to discover the magical warriors...' :
+                                      indicator.textContent.includes('hierarchy') ? 'Click to explore the currency hierarchy...' :
+                                      indicator.textContent.includes('royal') ? 'Click to learn about the royal era...' :
+                                      'Click to glimpse the future...';
+                    indicator.textContent = originalText;
+                });
+            }
+        });
+
+        // Add hover effects for character cards
+        document.querySelectorAll('.character-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Add floating animation to currency icons
+        document.querySelectorAll('.currency-icon').forEach(icon => {
+            icon.style.animation = `float ${2 + Math.random() * 2}s ease-in-out infinite`;
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9790e2e4a6b56c86',t:'MTc1Njg1Njc4MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
